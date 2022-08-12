@@ -1,4 +1,4 @@
-package com.lguilherme.bookstoragemanager.publisher.entity;
+package com.lguilherme.bookstoragemanager.models.Entity.publisher.entity;
 
 import lombok.Data;
 

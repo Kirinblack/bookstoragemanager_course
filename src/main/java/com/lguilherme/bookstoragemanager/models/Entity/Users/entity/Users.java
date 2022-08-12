@@ -1,4 +1,4 @@
-package com.lguilherme.bookstoragemanager.Users.entity;
+package com.lguilherme.bookstoragemanager.models.Entity.Users.entity;
 
 import javax.persistence.*;
 

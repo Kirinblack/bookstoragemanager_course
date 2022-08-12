@@ -1,11 +1,10 @@
-package com.lguilherme.bookstoragemanager.books.entity;
-
-import com.lguilherme.bookstoragemanager.publisher.entity.Publisher;
+package com.lguilherme.bookstoragemanager.models.Entity.books.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "TB Books")
 public class Books {
 
     @Id
@@ -26,8 +25,5 @@ public class Books {
 
     @Column(nullable = false)
     private String author;
-
-    @ManyToOne(cascade = {CascadeType.MERGE})
-    private Publisher publisher;
 
 }
