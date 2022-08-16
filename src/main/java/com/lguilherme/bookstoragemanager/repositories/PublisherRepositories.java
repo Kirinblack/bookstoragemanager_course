@@ -1,4 +1,11 @@
 package com.lguilherme.bookstoragemanager.repositories;
 
-public interface PublisherRepositories {
+import com.lguilherme.bookstoragemanager.models.Entity.publisher.entity.Publisher;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface PublisherRepositories extends JpaRepository<PublisherRepositories, Long> {
+
+    Optional<Publisher> findByName(String name);
 }
