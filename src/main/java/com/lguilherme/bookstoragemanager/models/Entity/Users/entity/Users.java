@@ -1,5 +1,6 @@
 package com.lguilherme.bookstoragemanager.models.Entity.Users.entity;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
 
 @Entity
@@ -23,7 +24,16 @@ public class Users {
 
     @Column(nullable = false, length = 100)
     private String  address;
+    @Column(nullable = false, unique = true, length = 30)
+    private String username;
 
-    public Users() {
-    }
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Role role;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<rentals> rentals;
 }

@@ -1,7 +1,7 @@
 package com.lguilherme.bookstoragemanager.models.mapper;
 
 import com.lguilherme.bookstoragemanager.models.Entity.Users.entity.Users;
-import com.lguilherme.bookstoragemanager.models.dto.UsersDTO;
+import com.lguilherme.bookstoragemanager.models.dto.UserDTO.UsersDTO;
 import org.mapstruct.factory.Mappers;
 
 public interface UsersMapper {

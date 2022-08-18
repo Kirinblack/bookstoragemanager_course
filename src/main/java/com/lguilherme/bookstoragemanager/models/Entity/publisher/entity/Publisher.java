@@ -3,7 +3,9 @@ package com.lguilherme.bookstoragemanager.models.Entity.publisher.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.awt.print.Book;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -21,4 +23,7 @@ public class Publisher {
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP")
     private LocalDate foundationDate;
+
+    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Book> books;
 }

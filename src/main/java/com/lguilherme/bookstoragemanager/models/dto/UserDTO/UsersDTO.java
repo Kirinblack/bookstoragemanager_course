@@ -1,4 +1,4 @@
-package com.lguilherme.bookstoragemanager.models.dto;
+package com.lguilherme.bookstoragemanager.models.dto.UserDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
