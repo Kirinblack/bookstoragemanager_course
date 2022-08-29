@@ -1,17 +1,31 @@
 package com.lguilherme.bookstoragemanager.repositories;
 
-import com.lguilherme.bookstoragemanager.models.Entity.Users.entity.Users;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.awt.print.Book;
+import com.lguilherme.bookstoragemanager.models.Entity.Users.Users;
+import com.lguilherme.bookstoragemanager.models.Entity.books.Books;
+import com.lguilherme.bookstoragemanager.models.Entity.rentals.rentals;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface RentalsRepositories extends JpaRepository<RentalsRepositories, Long> {
+public interface RentalsRepositories extends JpaRepository<rentals, Long> {
 
-    List<RentalsRepositories> findByBookandUsers(Object book,Object user);
+    default rentals save(rentals rentToSave) {
+        return rentToSave;
+    }
 
-    Optional<RentalsRepositories> findByBook(Book book);
+    List<rentals> findByBookandUsers(Object book, Object user);
 
-    Optional<RentalsRepositories> findByUsers(Users users);
+    static List<rentals> findByBook(Books book) {
+        return null;
+    }
+
+    Optional<rentals> findByUsers(Users user);
+
+    Optional<rentals> findByIdAndUsers(Long id, Users user);
+
+    Page<rentals> findAllByUsers(Users user, Pageable pageable);
+
 }

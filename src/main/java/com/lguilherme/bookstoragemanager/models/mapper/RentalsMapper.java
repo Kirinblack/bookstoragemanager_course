@@ -1,8 +1,9 @@
 package com.lguilherme.bookstoragemanager.models.mapper;
 
-import com.lguilherme.bookstoragemanager.models.Entity.rentals.entity.rentals;
-import com.lguilherme.bookstoragemanager.models.dto.RentaltDTO.RentalRequestDTO;
-import com.lguilherme.bookstoragemanager.models.dto.RentaltDTO.RentalResponseDTO;
+
+import com.lguilherme.bookstoragemanager.models.Entity.rentals.rentals;
+import com.lguilherme.bookstoragemanager.models.dto.RentalDTO.RentalRequestDTO;
+import com.lguilherme.bookstoragemanager.models.dto.RentalDTO.RentalResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -11,7 +12,9 @@ public interface RentalsMapper {
 
     RentalsMapper INSTANCE = Mappers.getMapper(RentalsMapper.class);
 
-    rentals toModel(RentalRequestDTO rentalRequestDTO);
+    static rentals toModel(RentalRequestDTO rentalRequestDTO) {
+        return null;
+    }
 
     rentals toModel(RentalResponseDTO rentalResponseDTO);
 

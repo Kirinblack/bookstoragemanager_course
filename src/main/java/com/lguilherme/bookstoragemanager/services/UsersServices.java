@@ -1,7 +1,10 @@
 package com.lguilherme.bookstoragemanager.services;
 
-import com.lguilherme.bookstoragemanager.models.Entity.Users.entity.Users;
-import com.lguilherme.bookstoragemanager.models.dto.UserDTO.UsersDTO;
+import com.lguilherme.bookstoragemanager.Books.Exception.DeleteDeniedException;
+import com.lguilherme.bookstoragemanager.Users.exception.UserAlreadyExistsException;
+import com.lguilherme.bookstoragemanager.Users.exception.UserNotFoundException;
+import com.lguilherme.bookstoragemanager.models.Entity.Users.Users;
+import com.lguilherme.bookstoragemanager.models.dto.UserDTO.UserDTO;
 import com.lguilherme.bookstoragemanager.models.mapper.UsersMapper;
 import com.lguilherme.bookstoragemanager.repositories.RentalsRepositories;
 import com.lguilherme.bookstoragemanager.repositories.UsersRepositories;
@@ -22,12 +25,12 @@ public class UsersServices {
     private RentalsRepositories rentalRepository;
 
     @Autowired
-    public UsersService(UsersRepositories userRepository,RentalsRepositories rentalRepository) {
+    public void UsersService(UsersRepositories userRepository, RentalsRepositories rentalRepository) {
         this.userRepository = userRepository;
         this.rentalRepository = rentalRepository;
     }
 
-    public UsersDTO create(UsersDTO userToCreateDTO) {
+    public UserDTO create(UserDTO userToCreateDTO) {
         verifyIfExists(userToCreateDTO.getEmail());
         Users userToCreate = userMapper.toModel(userToCreateDTO);
 
@@ -35,7 +38,7 @@ public class UsersServices {
         return userMapper.toDTO(createdUser);
     }
 
-    public UsersDTO update(Long id, UsersDTO userToUpdateDTO) {
+    public UserDTO update(Long id, UserDTO userToUpdateDTO) {
         Users foundUser = verifyAndGetIfExists(id);
 
         userToUpdateDTO.setId(foundUser.getId());
@@ -51,12 +54,12 @@ public class UsersServices {
         userRepository.deleteById(id);
     }
 
-    public UsersDTO findById(Long id) {
+    public UserDTO findById(Long id) {
         Users foundUser = verifyAndGetIfExists(id);
         return userMapper.toDTO(foundUser);
     }
 
-    public List<UsersDTO> findAll() {
+    public List<UserDTO> findAll() {
         return userRepository.findAll()
                 .stream()
                 .map(userMapper::toDTO)
@@ -64,12 +67,15 @@ public class UsersServices {
     }
 
     public Users verifyAndGetIfExists(Long id) {
-        return userRepository.findById(id)
+        return (Users) userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     private void verifyIfExists(String email) {
         Optional<Users> foundUser = userRepository.findByEmail(email);
         if(foundUser.isPresent()) throw new UserAlreadyExistsException(email);
+    }
+
+    public void deleteById(Long id) {
     }
 }

@@ -1,6 +1,6 @@
 package com.lguilherme.bookstoragemanager.models.dto.BooksDTO;
 
-import com.lguilherme.bookstoragemanager.models.dto.PublisherDTO;
+import com.lguilherme.bookstoragemanager.models.dto.PublishersDTO.PublisherRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,5 +24,5 @@ public class BooksResponseDTO {
 
     private String author;
 
-    private PublisherDTO publisher;
+    private PublisherRequestDTO publisher;
 }

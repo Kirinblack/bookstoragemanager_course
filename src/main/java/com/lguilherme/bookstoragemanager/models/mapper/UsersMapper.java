@@ -1,13 +1,13 @@
 package com.lguilherme.bookstoragemanager.models.mapper;
 
-import com.lguilherme.bookstoragemanager.models.Entity.Users.entity.Users;
-import com.lguilherme.bookstoragemanager.models.dto.UserDTO.UsersDTO;
+import com.lguilherme.bookstoragemanager.models.Entity.Users.Users;
+import com.lguilherme.bookstoragemanager.models.dto.UserDTO.UserDTO;
 import org.mapstruct.factory.Mappers;
 
 public interface UsersMapper {
 
     UsersMapper INSTANCE = Mappers.getMapper(UsersMapper.class);
-    Users  toModel(UsersDTO userDTO);
+    Users toModel(UserDTO userDTO);
 
-    UsersDTO toDTO(Users users);
+    UserDTO toDTO(Users users);
 }
