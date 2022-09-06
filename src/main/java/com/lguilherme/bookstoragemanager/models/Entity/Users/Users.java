@@ -37,7 +37,4 @@ public class Users {
     @Column(nullable = false, length = 20)
     private Role role;
 
-    public Long getId() {
-        return null;
-    }
 }

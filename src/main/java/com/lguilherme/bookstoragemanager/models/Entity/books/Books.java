@@ -1,5 +1,6 @@
 package com.lguilherme.bookstoragemanager.models.Entity.books;
 
+import com.lguilherme.bookstoragemanager.models.Entity.publisher.Publisher;
 import lombok.Data;
 import javax.persistence.*;
 import java.awt.print.Book;
@@ -28,4 +29,6 @@ public class Books extends Book {
     @Column(nullable = false)
     private String author;
 
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    private Publisher publisher;
 }

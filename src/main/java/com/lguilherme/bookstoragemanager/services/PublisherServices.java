@@ -34,7 +34,7 @@ public class PublisherServices {
     public PublisherResponseDTO create(PublisherRequestDTO publisherRequestDTO) {
         verifyIfExists(publisherRequestDTO.getName());
 
-        Publisher publisherToCreate = publisherMapper.toModel(PublisherRequestDTO);
+        Publisher publisherToCreate = publisherMapper.toModel(publisherRequestDTO);
         Publisher createdPublisher = publisherRepositories.save(publisherToCreate);
         return publisherMapper.toDTO(createdPublisher);
     }
@@ -52,7 +52,7 @@ public class PublisherServices {
 
     public void delete(Long id) {
         Publisher publisherToDelete = verifyAndGetIfExists(id);
-        if (!booksRepositories.findByPublisher(publisherToDelete).isEmpty()) {
+        if (booksRepositories.findByPublisher(publisherToDelete).isEmpty()) {
             throw new DeleteDeniedException();
         }
         publisherRepositories.deleteById(id);
@@ -92,9 +92,5 @@ public class PublisherServices {
     public PublisherRepositories verifyAndGetIfExists(Long id) {
         return publisherRepositories.findById(id)
                 .orElseThrow(() -> new PublisherNotFoundException(id));
-    }
-    public Publisher verifyAndGetIfExists;
-
-    public static Publisher verifyAndGetIfExists(Long publisherId) {
     }
 }

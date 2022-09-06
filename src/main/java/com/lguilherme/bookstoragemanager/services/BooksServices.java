@@ -1,6 +1,6 @@
 package com.lguilherme.bookstoragemanager.services;
 
-import com.lguilherme.bookstoragemanager.Books.DTO.BooksResponseDTO;
+
 import com.lguilherme.bookstoragemanager.Books.Exception.BookNotFoundException;
 import com.lguilherme.bookstoragemanager.Books.Exception.DeleteDeniedException;
 import com.lguilherme.bookstoragemanager.Books.Exception.InvalidDateException;
@@ -14,8 +14,6 @@ import com.lguilherme.bookstoragemanager.repositories.RentalsRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-import java.awt.print.Book;
 import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -40,43 +38,43 @@ public class BooksServices {
     public BooksResponseDTO create(BooksRequestDTO booksRequestDTO){
         verifyIfExists(booksRequestDTO.getName());
         Publisher foundPublisher = publisherServices.verifyAndGetIfExists(BooksRequestDTO.getPublisherId());
-        validateDate(BooksRequestDTO);
+        validateDate(booksRequestDTO);
 
-        Book bookToSave = BooksMapper.toModel(BooksRequestDTO);
+        Books bookToSave = BooksMapper.toModel(booksRequestDTO);
         bookToSave.setPublisher(foundPublisher);
 
-        Book savedBook =  BooksRepositories.save(bookToSave);
-        return BooksMapper.toDTO(savedBook);
+        Books savedBook =  BooksRepositories.save(bookToSave);
+        return BooksMapper.ToDTO(savedBook);
 
     }
     public BooksResponseDTO findById(Long id) {
         return BooksRepositories.findById(id)
-                .map(BooksMapper::toDTO)
+                .map(BooksMapper::ToDTO)
                 .orElseThrow(() -> new BookNotFoundException(id));
     }
     public Page<BooksResponseDTO> findAll(Pageable pageable) {
-        return BooksRepositories.findAll(pageable)
-                .map(BooksMapper::toDTO);
+        return BooksRepositories.findById(pageable)
+                .map(BooksMapper::ToDTO);
     }
 
     public void delete(Long id) {
-        Book bookToDelete = (Books) verifyAndGetIfExists(id);
+        Books bookToDelete = (Books) verifyAndGetIfExists(id);
         if(RentalsRepositories.findByBook(bookToDelete).isPresent()) throw new DeleteDeniedException();
-        Optional<Books> bookModel = bookRepositories.findById(id);
+        Optional<Books> bookModel = BooksRepositories.findById(id);
         bookRepositories.delete(bookModel.get());
     }
 
     public BooksResponseDTO update(Long id, BooksRequestDTO bookRequestDTO) {
-        Book foundBook = (Book) verifyAndGetIfExists(id);
+        Books foundBook = (Books) verifyAndGetIfExists(id);
         Publisher foundPublisher = PublisherServices.verifyAndGetIfExists(BooksRequestDTO.getPublisherId());
         validateDate(bookRequestDTO);
 
-        Book bookToUpdate = BooksMapper.toModel(bookRequestDTO);
+        Books bookToUpdate = BooksMapper.toModel(bookRequestDTO);
         bookToUpdate.setId(id);
         bookToUpdate.setPublisher(foundPublisher);
         bookToUpdate.setLaunchDate(foundBook.getLaunchDate());
-        Book updatedBook = BooksRepositories.save(bookToUpdate);
-        return BooksMapper.toDTO(updatedBook);
+        Books updatedBook = BooksRepositories.save(bookToUpdate);
+        return BooksMapper.ToDTO(updatedBook);
     }
 
     private void verifyIfExists(String name) {

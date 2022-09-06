@@ -12,15 +12,10 @@ import java.util.Optional;
 
 public interface RentalsRepositories extends JpaRepository<rentals, Long> {
 
-    default rentals save(rentals rentToSave) {
-        return rentToSave;
-    }
 
     List<rentals> findByBookandUsers(Object book, Object user);
 
-    static List<rentals> findByBook(Books book) {
-        return null;
-    }
+    List<rentals> findByBook(Books book);
 
     Optional<rentals> findByUsers(Users user);
 

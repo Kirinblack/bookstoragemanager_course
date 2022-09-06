@@ -11,13 +11,13 @@ public interface BooksMapper {
 
     BooksMapper INSTANCE = Mappers.getMapper(BooksMapper.class);
 
-    static Books toModel(BooksRequestDTO bookRequestDTO) {
+     static Books toModel(BooksRequestDTO bookRequestDTO) {
         return null;
     }
 
     Books toModel(BooksResponseDTO bookResponseDTO);
 
-    static BooksResponseDTO toDTO(Book book) {
+    static BooksResponseDTO ToDTO(Books books) {
         return null;
     }
 }

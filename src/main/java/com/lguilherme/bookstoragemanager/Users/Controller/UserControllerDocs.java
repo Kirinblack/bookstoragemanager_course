@@ -11,56 +11,48 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.data.domain.Page;
 
 import java.awt.print.Pageable;
+import java.util.List;
 
 @Api("System users management")
 public interface UserControllerDocs {
-    @ApiOperation(value = "User creation operation")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Success user creation"),
-            @ApiResponse(code = 400, message = "Missing required fields, wrong field range value or user already registered on system")
+            @ApiResponse(code = 200, message = "Success, message realized"),
+            @ApiResponse(code = 400, message = "Missing data. Check and try again.")
     })
+    @ApiOperation(value = "Create a new message")
     UserDTO create(UserDTO userToCreateDTO);
 
-    @ApiOperation(value = "User delete operation")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Success user exclusion"),
-            @ApiResponse(code = 404, message = "User with id not found in the System")
+            @ApiResponse(code = 200, message = "Success to get all users"),
+            @ApiResponse(code = 400, message = "Missing data. Check and try again.")
     })
-    void delete(Long id, AuthenticatedUser authenticatedUser);
+    @ApiOperation(value = "Get all users")
+    List<UserDTO> getUsers();
 
-    @ApiOperation(value = "User update operation")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success user updated"),
-            @ApiResponse(code = 400, message = "Missing required field, or an error on validation field rules")
+            @ApiResponse(code = 200, message = "Success to get the user"),
+            @ApiResponse(code = 400, message = "Missing data. Check and try again.")
     })
-    MessageDTO update(Long id, AuthenticatedUser authenticatedUser, UserDTO userToUpdateDTO);
+    @ApiOperation(value = "Get user by id")
+    UserDTO getById(Long id);
 
-    @ApiOperation(value = "Find user by id operation")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success user found"),
-            @ApiResponse(code = 404, message = "User not found error code")
-    })
-    UserDTO findById(Long id);
 
     MessageDTO update(Long id, AuthenticatedUser authenticatedUser, UserDTO userToUpdateDTO);
 
-    @ApiOperation(value = "List all registered users")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Return all registered users")
-    })
     Page<UserDTO> findAll(Pageable pageable);
 
-    @ApiOperation(value = "User authentication operation")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success user authenticated"),
-            @ApiResponse(code = 404, message = "User not found")
+            @ApiResponse(code = 200, message = "User updated"),
+            @ApiResponse(code = 400, message = "Missing data. Check and try again.")
     })
-    JwtResponse createAuthenticationToken(JwtRequest jwtRequest);
+    @ApiOperation(value = "Update a user")
+    public UserDTO update(Long id, UserDTO userDTO);
 
-    @ApiOperation(value = "User recover data operation")
+
+    @ApiOperation(value = "Delete a user by id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success user found"),
-            @ApiResponse(code = 404, message = "User not found")
+            @ApiResponse(code = 200, message = "Success, id deleted"),
+            @ApiResponse(code = 400, message = "Missing data. Check and try again.")
     })
-    MessageDTO recoverUserData(RecoverUserInfo recoverUserInfo);
+    void delete(Long id);
 }
