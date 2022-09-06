@@ -81,7 +81,7 @@ public class BooksServices {
     }
 }
 
-    public BooksRepositories verifyAndGetIfExists(Long id) {
+    public Books verifyAndGetIfExists(Long id) {
         return (BooksRepositories) BooksRepositories.findById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));
     }

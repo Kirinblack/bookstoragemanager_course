@@ -1,94 +1,71 @@
 package com.lguilherme.bookstoragemanager.services;
 
 
+import com.lguilherme.bookstoragemanager.Rentals.Exception.RentalAlreadyExistsException;
 import com.lguilherme.bookstoragemanager.Rentals.Exception.RentalNotFoundException;
 import com.lguilherme.bookstoragemanager.models.Entity.Users.Users;
 import com.lguilherme.bookstoragemanager.models.Entity.books.Books;
 import com.lguilherme.bookstoragemanager.models.Entity.rentals.rentals;
 import com.lguilherme.bookstoragemanager.models.dto.RentalDTO.RentalRequestDTO;
-import com.lguilherme.bookstoragemanager.models.dto.RentalDTO.RentalRequestUpdateDTO;
 import com.lguilherme.bookstoragemanager.models.dto.RentalDTO.RentalResponseDTO;
-import com.lguilherme.bookstoragemanager.models.dto.UserDTO.AuthenticatedUser;
 import com.lguilherme.bookstoragemanager.models.mapper.RentalsMapper;
 import com.lguilherme.bookstoragemanager.repositories.RentalsRepositories;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RentalsServices {
+   private final RentalsMapper rentalsMapper = RentalsMapper.INSTANCE;
 
-    private final RentalsMapper rentalsMapper = RentalsMapper.INSTANCE;
-    private final Object BooksServices;
+   private final RentalsRepositories rentalsRepositories;
 
-    private RentalsRepositories rentalsRepositories;
+   private final BooksServices booksServices;
 
-    private UsersServices usersServices;
+   private final UsersServices usersServices;
 
-    @Autowired
-    public  RentalsServices(RentalsRepositories rentalsRepositories, BooksServices booksServices, UsersServices usersServices){
+
+    public RentalsServices(RentalsRepositories rentalsRepositories, BooksServices booksServices, UsersServices usersServices) {
         this.rentalsRepositories = rentalsRepositories;
-        this.BooksServices = booksServices;
+        this.booksServices = booksServices;
         this.usersServices = usersServices;
     }
-    public RentalResponseDTO create(RentalRequestDTO rentalRequestDTO) {
-        Books foundBook = BooksServices.verifyAndGetIfExists(rentalRequestDTO.getBookId());
-        Users foundUser = UsersServices.verifyAndGetIfExists(rentalRequestDTO.getUserId());
-        String rentStatus = "Não devolvido";
 
-        rentals rentToSave = RentalsMapper.toModel(RentalRequestDTO);
-        rentToSave.setBook(foundBook);
-        rentToSave.setUsers(foundUser);
-        rentToSave.setReturnDate(rentStatus);
-        verifyIfExists(rentToSave.getBook(), rentToSave.getUsers());
+    public RentalResponseDTO create(RentalRequestDTO rentalRequestDTO){
+        verifyIfExists(rentalRequestDTO.getId());
 
-        Books alterBook = rentToSave.getBook();
+        Books foundBook = booksServices.verifyAndGetIfExists(rentalRequestDTO.getBookId());
+        Users foundUser = usersServices.verifyAndGetIfExists(rentalRequestDTO.getUserId());
 
-        validateDate(rentalRequestDTO, rentToSave, alterBook);
-        alterBook.setQuantity(alterBook.getQuantity() - 1);
-        alterBook.setRentedQuantity(alterBook.getRentedQuantity() + 1);
+        rentals rentalsToCreate = RentalsMapper.toModel(rentalRequestDTO);
+        rentalsToCreate.setBook(foundBook);
+        rentalsToCreate.setUsers(foundUser);
 
-        rentals savedRent = RentalsRepositories.save(rentToSave);
-        return rentalsMapper.toDTO(savedRent);
+        rentals rentalsCreated = rentalsRepositories.save(rentalsToCreate);
+        return  rentalsMapper.toDTO(rentalsCreated);
     }
 
-    private void verifyIfExists(Books book, Users users) {
-
+    public List<RentalResponseDTO> findAll(){
+        return rentalsRepositories.findAll()
+                .stream()
+                .map(rentalsMapper::toDTO)
+                .collect(Collectors.toList());
     }
-
-    private void validateDate(RentalRequestDTO rentalRequestDTO, rentals rentToSave, Books alterBook) {
-
+    public RentalResponseDTO findById(Long id){
+        return rentalsRepositories.findById(id)
+                .map(rentalsMapper::toDTO)
+                .orElseThrow(()-> new RentalNotFoundException(id));
     }
-
-    public RentalResponseDTO findById(Long id, AuthenticatedUser authenticatedUser) {
-        Users foundAuthenticatedUser = UsersServices.verifyAndGetUserIfExists(authenticatedUser.getUsername());
-        if(isAdmin(foundAuthenticatedUser)) {
-            return rentalsRepositories.findById(id)
-                    .map(RentalsMapper::toDTO)
-                    .orElseThrow(() -> new RentalNotFoundException(id));
+    public void deleteById(Long id){
+        rentalsRepositories.deleteById(id);
+    }
+    public void verifyIfExists(Long id){
+        Optional<rentals> duplicatedRentals = rentalsRepositories.findById(id);
+        if (duplicatedRentals.isPresent()){
+            throw new RentalAlreadyExistsException(id);
         }
-
-    private void validateDate(RentalRequestDTO RentalRequestDTO, rentals rentToSave, Books alterBook) {
     }
 
-    private void verifyIfExists(Books Object book;
-        book, Users Object users;
-        users) {
-    }
 }
-
-    private boolean isAdmin(Users foundAuthenticatedUser) {
-        return false;
-    }
-
-    public RentalResponseDTO update(Long id, AuthenticatedUser authenticatedUser, RentalRequestUpdateDTO rentalRequestUpdateDTO) {
-        return null;
-    }
-
-    public void delete(Long id, AuthenticatedUser authenticatedUser) {
-    }
-
-    public Page<RentalResponseDTO> findAll(AuthenticatedUser authenticatedUser, Pageable pageable) {
-    }
