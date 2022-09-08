@@ -16,9 +16,15 @@ public class BooksResponseDTO {
 
     private String name;
 
+    private String code;
+
     private Integer quantity;
 
     private Integer rentedQuantity;
+
+    private LocalDate release;
+
+    private LocalDate changeDate;
 
     private LocalDate launchDate;
 

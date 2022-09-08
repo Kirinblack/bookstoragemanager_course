@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
+@Table(name = "Books")
 public class Books extends Book {
 
     @Id
@@ -17,11 +18,20 @@ public class Books extends Book {
     @Column(nullable = false, unique = true, length = 100)
     private String name;
 
+    @Column(nullable = false)
+    private  String code;
+
     @Column(columnDefinition =  "integer default 0")
     private int quantity;
 
     @Column(columnDefinition =  "integer default 0")
     private int requentQuantity;
+
+    @Column(nullable = false)
+    private LocalDate release;
+
+    @Column(nullable = false)
+    private LocalDate changeDate;
 
     @Column(nullable = false)
     private LocalDate launchDate;

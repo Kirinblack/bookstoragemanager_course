@@ -67,5 +67,17 @@ public class RentalsServices {
             throw new RentalAlreadyExistsException(id);
         }
     }
+    public  void deleteByBook(Long id){
+        Books books = booksServices.verifyAndGetIfExists(id);
+        List<rentals> rentals = rentalsRepositories.findByBook(books);
+        rentals.stream().forEach((rentalList) ->{
+            rentalsRepositories.deleteById(rentalList.getId());
+        });
+    }
+
+    private rentals verifyAndGetIfExists(Long id) {
+        return rentalsRepositories.findById(id)
+                .orElseThrow(() -> new RentalAlreadyExistsException(id));
+    }
 
 }

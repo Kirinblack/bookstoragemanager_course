@@ -3,9 +3,11 @@ package com.lguilherme.bookstoragemanager.models.Entity.publisher;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @Entity
+@Table(name = "Publisher")
 public class Publisher {
 
     @Id
@@ -15,7 +17,13 @@ public class Publisher {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(nullable = false,unique = true,length = 100)
+    private String code;
+
     @Column(nullable = false,length = 100)
     private String city;
+
+    @Column(nullable = false)
+    private LocalDate registrationDate;
 
 }

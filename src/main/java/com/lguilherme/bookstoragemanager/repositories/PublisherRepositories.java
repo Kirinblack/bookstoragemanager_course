@@ -10,4 +10,5 @@ public interface PublisherRepositories extends JpaRepository<PublisherRepositori
 
     Optional<Publisher> findByName(String name);
 
+    <U> U toDTO(PublisherRepositories publisherRepositories);
 }

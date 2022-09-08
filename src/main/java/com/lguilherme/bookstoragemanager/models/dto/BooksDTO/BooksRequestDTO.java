@@ -26,6 +26,11 @@ public class BooksRequestDTO {
     private Integer quantity;
 
     @NotNull
+    @NotEmpty
+    @Size(max = 50)
+    private String code;
+
+    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate launchDate;
 

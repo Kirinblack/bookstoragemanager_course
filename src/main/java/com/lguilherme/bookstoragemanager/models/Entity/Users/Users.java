@@ -2,11 +2,15 @@ package com.lguilherme.bookstoragemanager.models.Entity.Users;
 
 
 
+import lombok.Data;
+
 import javax.management.relation.Role;
 import javax.persistence.*;
 
 
 @Entity
+@Data
+@Table(name="users")
 public class Users {
 
     @Id

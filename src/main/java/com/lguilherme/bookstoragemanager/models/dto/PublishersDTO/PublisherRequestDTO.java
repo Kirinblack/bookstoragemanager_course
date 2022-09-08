@@ -23,5 +23,10 @@ public class PublisherRequestDTO {
     @NotNull
     @NotEmpty
     @Size(max = 50)
+    private String code;
+
+    @NotNull
+    @NotEmpty
+    @Size(max = 50)
     private String city;
 }

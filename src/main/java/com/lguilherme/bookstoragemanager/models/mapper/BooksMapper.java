@@ -17,7 +17,7 @@ public interface BooksMapper {
 
     Books toModel(BooksResponseDTO bookResponseDTO);
 
-    static BooksResponseDTO ToDTO(Books books) {
+    BooksResponseDTO ToDTO(Books books) {
         return null;
     }
 }
