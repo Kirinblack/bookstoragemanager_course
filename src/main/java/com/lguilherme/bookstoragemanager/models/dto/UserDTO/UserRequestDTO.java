@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserRequestDTO {
     private Long id;
 
     @NotNull
@@ -46,5 +46,5 @@ public class UserDTO {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private Role role;
+    private Role value;
 }

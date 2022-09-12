@@ -2,15 +2,14 @@ package com.lguilherme.bookstoragemanager.models.Entity.Users;
 
 
 
+import com.lguilherme.bookstoragemanager.Users.enums.Role;
 import lombok.Data;
-
-import javax.management.relation.Role;
 import javax.persistence.*;
 
 
 @Entity
 @Data
-@Table(name="users")
+@Table(name="Users")
 public class Users {
 
     @Id

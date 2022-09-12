@@ -12,11 +12,10 @@ public interface RentalsMapper {
 
     RentalsMapper INSTANCE = Mappers.getMapper(RentalsMapper.class);
 
-    static rentals toModel(RentalRequestDTO rentalRequestDTO) {
-        return null;
-    }
+    rentals toModel(RentalRequestDTO rentalRequestDTO);
 
     rentals toModel(RentalResponseDTO rentalResponseDTO);
 
     RentalResponseDTO toDTO(rentals rental);
+
 }

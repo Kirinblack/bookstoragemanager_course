@@ -1,9 +1,11 @@
 package com.lguilherme.bookstoragemanager.Rentals.Exception;
 
+import com.lguilherme.bookstoragemanager.models.Entity.books.Books;
+
 import javax.persistence.EntityExistsException;
 
 public class RentalAlreadyExistsException extends EntityExistsException {
-    public RentalAlreadyExistsException(Object book){
-        super(String.format("The user %s has already rented the book %s",user,book));
+    public RentalAlreadyExistsException(Long id){
+        super(String.format("Rental with id %s already exists!", id));
     }
 }

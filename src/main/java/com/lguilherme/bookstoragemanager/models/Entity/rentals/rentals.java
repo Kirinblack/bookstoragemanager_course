@@ -14,8 +14,7 @@ import java.time.LocalDate;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Data
-@Table(name = "rentals")
+@Table(name = "Rentals")
 public class rentals {
 
     @Id

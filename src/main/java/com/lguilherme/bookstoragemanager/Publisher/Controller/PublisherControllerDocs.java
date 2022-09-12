@@ -2,13 +2,13 @@ package com.lguilherme.bookstoragemanager.Publisher.Controller;
 
 import com.lguilherme.bookstoragemanager.models.dto.PublishersDTO.PublisherRequestDTO;
 import com.lguilherme.bookstoragemanager.models.dto.PublishersDTO.PublisherResponseDTO;
+import com.lguilherme.bookstoragemanager.models.dto.UserDTO.MessageDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.data.domain.Page;
-
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 
 @Api("Publishers management")
 public interface PublisherControllerDocs {
@@ -17,7 +17,7 @@ public interface PublisherControllerDocs {
             @ApiResponse(code = 201, message = "Success publisher creation"),
             @ApiResponse(code = 400, message = "Missing required fields, wrong field range value or publisher already registered on system")
     })
-    PublisherResponseDTO create(PublisherRequestDTO publisherRequestDTO);
+    MessageDTO create(PublisherRequestDTO publisherRequestDTO);
 
     @ApiOperation(value = "Find publisher by id operation")
     @ApiResponses(value = {
@@ -44,5 +44,5 @@ public interface PublisherControllerDocs {
             @ApiResponse(code = 200, message = "Success publisher update"),
             @ApiResponse(code = 400, message = "Missing required field, or an error on validation field rules")
     })
-    PublisherResponseDTO update(Long id, PublisherRequestDTO publisherRequestDTO);
+    MessageDTO update(Long id, PublisherRequestDTO publisherRequestDTO);
 }

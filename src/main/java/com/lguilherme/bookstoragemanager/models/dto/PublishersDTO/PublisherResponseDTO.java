@@ -14,4 +14,5 @@ public class PublisherResponseDTO {
     private String name;
 
     private String city;
+
 }

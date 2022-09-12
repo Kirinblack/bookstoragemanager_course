@@ -2,11 +2,11 @@ package com.lguilherme.bookstoragemanager.models.dto.RentalDTO;
 
 
 import com.lguilherme.bookstoragemanager.models.Entity.Users.Users;
+import com.lguilherme.bookstoragemanager.models.Entity.books.Books;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.awt.print.Book;
 import java.time.LocalDate;
 
 @Data
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class RentalResponseDTO {
     private Long id;
 
-    private Book book;
+    private Books book;
 
     private Users users;
 

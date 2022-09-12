@@ -3,13 +3,12 @@ package com.lguilherme.bookstoragemanager.models.Entity.books;
 import com.lguilherme.bookstoragemanager.models.Entity.publisher.Publisher;
 import lombok.Data;
 import javax.persistence.*;
-import java.awt.print.Book;
 import java.time.LocalDate;
 
 @Entity
 @Data
 @Table(name = "Books")
-public class Books extends Book {
+public class Books  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

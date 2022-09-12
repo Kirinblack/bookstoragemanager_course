@@ -4,13 +4,14 @@ import com.lguilherme.bookstoragemanager.Books.Exception.DeleteDeniedException;
 import com.lguilherme.bookstoragemanager.Users.exception.UserAlreadyExistsException;
 import com.lguilherme.bookstoragemanager.Users.exception.UserNotFoundException;
 import com.lguilherme.bookstoragemanager.models.Entity.Users.Users;
-import com.lguilherme.bookstoragemanager.models.dto.UserDTO.UserDTO;
+import com.lguilherme.bookstoragemanager.models.dto.UserDTO.UserRequestDTO;
+import com.lguilherme.bookstoragemanager.models.dto.UserDTO.UserResponseDTO;
 import com.lguilherme.bookstoragemanager.models.mapper.UsersMapper;
-import com.lguilherme.bookstoragemanager.repositories.RentalsRepositories;
-import com.lguilherme.bookstoragemanager.repositories.UsersRepositories;
+import com.lguilherme.bookstoragemanager.repositories.RentalsRepository;
+import com.lguilherme.bookstoragemanager.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,59 +21,54 @@ public class UsersServices {
 
     private final static UsersMapper userMapper = UsersMapper.INSTANCE;
 
-    private UsersRepositories userRepository;
-
-    private RentalsRepositories rentalRepository;
-
     @Autowired
-    public void UsersService(UsersRepositories userRepository, RentalsRepositories rentalRepository) {
-        this.userRepository = userRepository;
-        this.rentalRepository = rentalRepository;
-    }
+    @Lazy
+    UsersRepository usersRepository;
+    RentalsRepository rentalsRepository;
 
-    public UserDTO create(UserDTO userToCreateDTO) {
+    public UserResponseDTO create(UserRequestDTO userToCreateDTO) {
         verifyIfExists(userToCreateDTO.getEmail());
         Users userToCreate = userMapper.toModel(userToCreateDTO);
 
-        Users createdUser = userRepository.save(userToCreate);
+        Users createdUser = usersRepository.save(userToCreate);
         return userMapper.toDTO(createdUser);
     }
 
-    public UserDTO update(Long id, UserDTO userToUpdateDTO) {
+    public UserResponseDTO update(Long id, UserRequestDTO userToUpdateDTO) {
         Users foundUser = verifyAndGetIfExists(id);
 
         userToUpdateDTO.setId(foundUser.getId());
         Users userToUpdate = userMapper.toModel(userToUpdateDTO);
 
-        Users updatedUser = userRepository.save(userToUpdate);
+        Users updatedUser = usersRepository.save(userToUpdate);
         return userMapper.toDTO(updatedUser);
     }
 
     public void delete(Long id) {
         Users userToDelete = verifyAndGetIfExists(id);
-        if(rentalRepository.findByUsers(userToDelete).isPresent()) throw new DeleteDeniedException();
-        userRepository.deleteById(id);
+        if(rentalsRepository.findByUsers(userToDelete).isPresent()) throw new DeleteDeniedException();
+        usersRepository.deleteById(id);
     }
 
-    public UserDTO findById(Long id) {
+    public UserResponseDTO findById(Long id) {
         Users foundUser = verifyAndGetIfExists(id);
         return userMapper.toDTO(foundUser);
     }
 
-    public List<UserDTO> findAll() {
-        return userRepository.findAll()
+    public List<UserResponseDTO> findAll() {
+        return usersRepository.findAll()
                 .stream()
                 .map(userMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     public Users verifyAndGetIfExists(Long id) {
-        return (Users) userRepository.findById(id)
+        return (Users) usersRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     private void verifyIfExists(String email) {
-        Optional<Users> foundUser = userRepository.findByEmail(email);
+        Optional<Users> foundUser = usersRepository.findByEmail(email);
         if(foundUser.isPresent()) throw new UserAlreadyExistsException(email);
     }
 
