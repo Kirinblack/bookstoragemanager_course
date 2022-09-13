@@ -9,11 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 
-
 public interface RentalsRepository extends JpaRepository<rentals, Long> {
 
 
-    List<rentals> findByBookandUsers(Books books , Users users);
 
     List<rentals> findByBook(Books book);
 

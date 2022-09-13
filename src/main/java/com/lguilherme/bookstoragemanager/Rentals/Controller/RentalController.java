@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("api/v1/rentals")
+@RequestMapping("/api/v1/rentals")
 public class RentalController implements  RentalControllerDocs{
 
     @Autowired

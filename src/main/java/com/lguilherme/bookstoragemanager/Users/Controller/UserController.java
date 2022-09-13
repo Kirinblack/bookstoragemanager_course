@@ -1,7 +1,6 @@
 package com.lguilherme.bookstoragemanager.Users.Controller;
 
-import com.lguilherme.bookstoragemanager.models.dto.UserDTO.AuthenticatedUser;
-import com.lguilherme.bookstoragemanager.models.dto.UserDTO.MessageDTO;
+
 import com.lguilherme.bookstoragemanager.models.dto.UserDTO.UserRequestDTO;
 import com.lguilherme.bookstoragemanager.models.dto.UserDTO.UserResponseDTO;
 import com.lguilherme.bookstoragemanager.services.UsersServices;
@@ -37,20 +36,20 @@ public abstract class UserController implements  UserControllerDocs {
         return usersServices.create(userToCreateDTO);
     }
 
-    @Override
-    public MessageDTO update(Long id, AuthenticatedUser authenticatedUser, UserRequestDTO userToUpdateDTO) {
-        return null;
-    }
+    //@Override
+    //public MessageDTO update(Long id, UserRequestDTO userToUpdateDTO) {
+        //return null;
+   // }
 
     @Override
     public Page<UserRequestDTO> findAll(Pageable pageable) {
         return null;
     }
 
-    @PutMapping("{id}")
-    public UserResponseDTO update(@PathVariable Long id, @RequestBody @Valid UserRequestDTO userRequestDTO) {
-        return usersServices.update(id, userRequestDTO);
-    }
+   // @PutMapping("{id}")
+    //public UserResponseDTO update(@PathVariable Long id, @RequestBody @Valid UserRequestDTO userRequestDTO) {
+        //return usersServices.update(id, userRequestDTO);
+   // }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

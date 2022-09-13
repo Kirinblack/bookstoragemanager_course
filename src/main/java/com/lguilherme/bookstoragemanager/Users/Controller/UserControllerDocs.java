@@ -1,7 +1,7 @@
 package com.lguilherme.bookstoragemanager.Users.Controller;
 
 
-import com.lguilherme.bookstoragemanager.models.dto.UserDTO.AuthenticatedUser;
+
 import com.lguilherme.bookstoragemanager.models.dto.UserDTO.MessageDTO;
 import com.lguilherme.bookstoragemanager.models.dto.UserDTO.UserRequestDTO;
 import com.lguilherme.bookstoragemanager.models.dto.UserDTO.UserResponseDTO;
@@ -38,7 +38,7 @@ public interface UserControllerDocs {
     UserResponseDTO getById(Long id);
 
 
-    MessageDTO update(Long id, AuthenticatedUser authenticatedUser, UserRequestDTO userToUpdateDTO);
+    //MessageDTO update(Long id, UserRequestDTO userToUpdateDTO);
 
     Page<UserRequestDTO> findAll(Pageable pageable);
 
